@@ -1,17 +1,22 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Link } from 'react-router-dom'
 import './topbar.css'
 import SearchIcon from '@mui/icons-material/Search'
 import PersonIcon from '@mui/icons-material/Person'
 import ChatIcon from '@mui/icons-material/Chat'
 import NotificationsIcon from '@mui/icons-material/Notifications'
+import AuthContext from "../../context/AuthContext"
 
 
 function Topbar() {
+
+  const {user} = useContext(AuthContext)
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER
+
   return (
     <div className='topbarContainer'>
       <div className='topbarLeft'>
-        <Link to='/' >
+        <Link to='/'>
           <span className='logo'> SpaceBook </span>
         </Link>
       </div>
@@ -47,7 +52,17 @@ function Topbar() {
             <span className='topbarIconBadge'>1</span>
           </div>
         </div>
-        <img src='/assets/characters/r2d2.jpeg' alt='' className='topbarImg' />
+        <Link to={`/profile/${user.username}`}>
+          <img
+            src={
+              user.profilepicture
+                ? PF + user.profilePicture
+                : PF + '/characters/avatar.jpeg'
+            }
+            alt=''
+            className='topbarImg'
+          />
+        </Link>
       </div>
     </div>
   )
